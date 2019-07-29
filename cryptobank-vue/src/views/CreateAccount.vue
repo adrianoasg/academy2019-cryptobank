@@ -3,7 +3,7 @@
     <div class="auth-modal">
       <img class="logo" :src="require('../assets/logo.svg')" alt="Logo"/>
 
-      <form class="createaccount-form" @submit.prevent="createAccount">
+      <form class="createaccount-form" @submit.prevent="createAccountUser">
         <div class="input-control">
           <label for="email-input">E-mail</label>
           <input v-model="email" type="email" id="email-input" required name="email" class="input" placeholder="Digite seu e-mail">
@@ -34,24 +34,47 @@
 </template>
 
 <script>
-import firebase from 'firebase'
+import * as firebase from 'firebase'
 
 export default {
-  data: () => ({
-    email: '',
-    password: ''
-  }),
+  data () {
+    return {
+      account: {
+        value: 0
+      },
+      user: {
+        email: '',
+        password: ''
+      }
+    }
+  },
 
   methods: {
-    createAccount () {
+    createAccountUser () {
       firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
         .then(() => {
-          alert('Conta criada com sucesso !')
+          this.createAccountBank()
           this.$router.push({ path: '/login' })
         }).catch((error) => {
-          alert('Erro ao criar conta \n\n' + error)
+          alert('Erro ao criar usuário \n\n' + error)
         })
     },
+    createAccountBank (...args) {
+      const { value } = this.account
+
+      const email = this.email
+      const docId = firebase.firestore().collection('posts').doc().id
+      const userUid = firebase.auth().currentUser.uid
+
+      firebase.firestore()
+        .collection('accounts').doc(docId).set({ id: docId, email, value, userUid })
+        .then(() => {
+          alert('Conta criada com sucesso!')
+        }).catch(error => {
+          alert('Erro ao criar conta! \n\n' + error)
+        })
+    },
+
     returnToLogin () {
       this.$router.push({ path: '/login' })
     }
@@ -149,7 +172,7 @@ export default {
     border: 0;
     border-radius: 5px;
     color: #FFF;
-    padding: 15px 15px;
+    padding: 15px 25px;
     font-family: 'Roboto', sans-serif;
     font-weight: bold;
     font-size: 15px;

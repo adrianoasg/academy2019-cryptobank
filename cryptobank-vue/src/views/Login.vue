@@ -39,7 +39,8 @@ import firebase from 'firebase'
 export default {
   data: () => ({
     email: '',
-    password: ''
+    password: '',
+    value: 0
   }),
 
   methods: {
@@ -150,11 +151,11 @@ export default {
     border: 0;
     border-radius: 5px;
     color: #FFF;
-    padding: 15px 15px;
+    padding: 15px 30px;
     font-family: 'Roboto', sans-serif;
     font-weight: bold;
     font-size: 15px;
-    width: 130px;
+    width: 100px;
     height: 45px;
     cursor: pointer;
   }
