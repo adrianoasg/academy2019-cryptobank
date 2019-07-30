@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import firebase from 'firebase'
-import Feed from './views/Home.vue'
+import Home from './views/Home.vue'
 
 Vue.use(Router)
 
@@ -20,7 +20,7 @@ const router = new Router({
     {
       path: '/home',
       name: 'home',
-      component: Feed,
+      component: Home,
       meta: {
         requiresAuth: true
       }
@@ -39,6 +39,14 @@ const router = new Router({
       path: '/account/:id',
       name: 'account',
       component: () => import(/* webpackChunkName: "account" */ './views/Account.vue'),
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/deposit/new',
+      name: 'new-deposit',
+      component: () => import(/* webpackChunkName: "new-deposit" */ './views/NewDeposit.vue'),
       meta: {
         requiresAuth: true
       }
