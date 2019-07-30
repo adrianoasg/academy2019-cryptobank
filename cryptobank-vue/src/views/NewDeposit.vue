@@ -67,12 +67,12 @@ export default {
               .then(() => {
                 alert('Deposito efetuado sucesso!')
               }).catch(error => {
-                alert('Erro ao efetuar deposito! \n\n' + error)
+                alert('Deposito não efetuado! \n\n' + error)
               })
           })
         })
           .catch(error => {
-            alert('Error getting documents', error)
+            alert('Erro ao carregar os dados', error)
           })
       } else {
         alert('Digite um valor entre $KA 10,00 e $KA 15.000,00')

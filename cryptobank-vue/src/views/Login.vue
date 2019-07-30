@@ -39,8 +39,7 @@ import firebase from 'firebase'
 export default {
   data: () => ({
     email: '',
-    password: '',
-    value: 0
+    password: ''
   }),
 
   methods: {

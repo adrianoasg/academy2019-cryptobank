@@ -72,12 +72,12 @@ export default {
               .then(() => {
                 alert('Pagamento efetuado com sucesso!')
               }).catch(error => {
-                alert('Erro ao efetuar pagamento!', error)
+                alert('Pagamento não efetuado!', error)
               })
           })
         })
           .catch(error => {
-            alert('Error getting documents', error)
+            alert('Erro ao carregar os dados', error)
           })
       } else {
         alert('Digite um valor entre $KA 10,00 e $KA 15.000,00')

@@ -6,12 +6,12 @@
       <form class="createaccount-form" @submit.prevent="createAccountUser">
         <div class="input-control">
           <label for="email-input">E-mail</label>
-          <input v-model="email" type="email" id="email-input" required name="email" class="input" placeholder="Digite seu e-mail">
+          <input v-model="account.email" type="email" id="email-input" required name="email" class="input" placeholder="Digite seu e-mail">
         </div>
 
         <div class="input-control">
           <label for="password-input">Senha</label>
-          <input v-model="password" type="password" id="password-input" required name="password" class="input" placeholder="Digite sua senha">
+          <input v-model="account.password" type="password" id="password-input" required name="password" class="input" placeholder="Digite sua senha">
         </div>
 
         <div class="actions">
@@ -39,17 +39,19 @@ import * as firebase from 'firebase'
 export default {
   data () {
     return {
-      email: '',
-      password: '',
       account: {
+        email: '',
+        password: '',
         value: 0
       }
     }
   },
 
   methods: {
-    createAccountUser () {
-      firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
+    createAccountUser (...args) {
+      const { email, password } = this.account
+
+      firebase.auth().createUserWithEmailAndPassword(email, password)
         .then(() => {
           this.createAccountBank()
           this.$router.push({ path: '/login' })
@@ -58,9 +60,9 @@ export default {
         })
     },
     createAccountBank (...args) {
-      const { value } = this.account
+      const { email, value } = this.account
 
-      const email = this.email
+      // const email = this.email
       const docId = firebase.firestore().collection('posts').doc().id
       const userUid = firebase.auth().currentUser.uid
 
