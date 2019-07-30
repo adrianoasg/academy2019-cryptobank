@@ -16,7 +16,6 @@
           </FormControl>
           <div class="actions">
             <Button labelButton="Depositar"/>
-            <!-- <button type="submit" class="button" @click="getIdDoc">Teste</button> -->
           </div>
         </form>
       </CardTransaction>
@@ -43,37 +42,41 @@ export default {
   },
 
   methods: {
-    newDeposit () {
+    newDeposit (...args) {
       const { valueDesposit } = this.account
 
-      const db = firebase.firestore()
+      if (valueDesposit >= 10 && valueDesposit <= 15000) {
+        const db = firebase.firestore()
 
-      const userUid = firebase.auth().currentUser.uid
-      const accountsRef = db.collection('accounts')
-      const query = accountsRef.where('userUid', '==', userUid)
+        const userUid = firebase.auth().currentUser.uid
+        const accountRef = db.collection('accounts')
+        const query = accountRef.where('userUid', '==', userUid)
 
-      query.get().then(snapshot => {
-        snapshot.forEach(doc => {
-          const docId = doc.id
-          // Create a reference to the cities collection
-          const accountRef = db.collection('accounts').doc(docId)
+        query.get().then(snapshot => {
+          snapshot.forEach(doc => {
+            const docId = doc.id
+            // Create a reference to the cities collection
+            const accountRefDep = accountRef.doc(docId)
 
-          db.runTransaction(t => {
-            return t.get(accountRef).then(doc => {
-              const newDepositValue = doc.data().value + valueDesposit
-              t.update(accountRef, { value: newDepositValue })
+            db.runTransaction(t => {
+              return t.get(accountRefDep).then(doc => {
+                const newDepositValue = doc.data().value + valueDesposit
+                t.update(accountRefDep, { value: newDepositValue })
+              })
             })
+              .then(() => {
+                alert('Deposito efetuado sucesso!')
+              }).catch(error => {
+                alert('Erro ao efetuar deposito! \n\n' + error)
+              })
           })
-            .then(() => {
-              alert('Deposito efetuado sucesso!')
-            }).catch(error => {
-              alert('Erro ao efetuar deposito! \n\n' + error)
-            })
         })
-      })
-        .catch(err => {
-          alert('Error getting documents', err)
-        })
+          .catch(error => {
+            alert('Error getting documents', error)
+          })
+      } else {
+        alert('Digite um valor entre $KA 10,00 e $KA 15.000,00')
+      }
     }
   }
 }

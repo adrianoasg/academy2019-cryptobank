@@ -62,12 +62,10 @@ export default {
         })
       })
   },
-
   destroyed () {
     // unsubscribe listener
     accountSnapshotListener()
   },
-
   methods: {
     handleNewDeposit () {
       this.$router.push({ path: '/deposit/new' })
