@@ -50,6 +50,14 @@ const router = new Router({
       meta: {
         requiresAuth: true
       }
+    },
+    {
+      path: '/pay/new',
+      name: 'new-pay',
+      component: () => import(/* webpackChunkName: "new-pay" */ './views/NewPay.vue'),
+      meta: {
+        requiresAuth: true
+      }
     }
   ]
 })

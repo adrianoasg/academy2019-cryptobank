@@ -70,10 +70,10 @@ export default {
 
   methods: {
     handleNewDeposit () {
-      this.$router.push({ path: '/deposit' })
+      this.$router.push({ path: '/deposit/new' })
     },
     handleNewPay () {
-      this.$router.push({ path: '/pay' })
+      this.$router.push({ path: '/pay/new' })
     }
   }
 }
