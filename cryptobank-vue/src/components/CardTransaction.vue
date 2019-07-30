@@ -1,18 +1,16 @@
 <template>
   <article class="card">
     <header>
-      <div class="title">
-        <span>Depositar</span>
+      <div class="header">
+        <div class="icon-button" tag="button" @click="returnToHome">
+          <img class="icon" :src="require('../assets/left-arrow.png')"/>
+        </div>
+        <label class="label">{{ label }}</label>
       </div>
-      <div class="infoDeposit">
-        <span class="info">Informe a quantia desejada</span>
-        <span class="value">$KA </span>
-        <input type="number">
-        <span class="infoValue">Digite um valor entre $KA 10,00 e $KA 15.000,00</span>
+      <div class="info">
+        <span>Informe a quantia desejada</span>
       </div>
-      <div class="btn-actions">
-      <button id="btn-deposit">Depositar</button>
-    </div>
+      <slot />
     </header>
   </article>
 </template>
@@ -21,9 +19,13 @@
 export default {
   name: 'Card',
   props: {
-    account: {
-      type: Object,
+    label: {
       required: true
+    }
+  },
+  methods: {
+    returnToHome () {
+      this.$router.push({ path: '/home' })
     }
   }
 }
@@ -33,7 +35,7 @@ export default {
 <style scoped>
 .card {
   max-width: 450px;
-  width: 334px;
+  width: 380px;
   margin: 1.5em auto;
   border: 1px solid #dedede;
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
@@ -44,47 +46,41 @@ export default {
 header {
   background: #ffffff;
   overflow: hidden;
-  padding: .5em 1em;
-
+  /* padding: 0em 1em; */
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-.infoDeposit {
-  display: flex;
-  flex-direction: column;
-}
-
-.title {
+.header {
+  width: 100%;
+  height: 32px;
   background: #4076AD;
   border-radius: 3px;
   color: #FFFFFF;
   font-size: 13px;
-  padding: 0px 5px;
+  display: flex;
+  text-align: center;
+}
+
+.icon {
+  padding-top: 5px;
+  cursor: pointer;
+}
+
+label {
+  font-size: 13px;
+  font-weight: 700;
+  text-align: center;
+  padding-top: 5px;
+  padding-left: 150px;
 }
 
 .info {
-  font-size: 15px;
+  font-size: 20px;
   font-weight: 300;
-  display: flex;
-  flex-direction: column;
   padding: 15px 0px;
-}
-
-.value {
-  font-size: 40px;
-  font-weight: 700;
-  margin: .2em 0;
-}
-
-.infoValue {
-  font-size: 10px;
-  font-weight: 400;
-  margin: .2em 0;
-}
-
-.btn-actions {
-  padding: 15px;
 }
 
 </style>

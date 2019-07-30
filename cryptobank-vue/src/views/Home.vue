@@ -10,8 +10,8 @@
     </div>
 
     <div class="btn-actions">
-      <button type="navigate" id="new-deposit-button" class="center" @click="handleNewDeposit">Depositar</button>
-      <button id="btn-pay">Pagar</button>
+      <button type="navigate" id="new-deposit-button" class="btn" @click="handleNewDeposit">Depositar</button>
+      <button id="new-pay-button" class="btn" @click="handleNewPay">Pagar</button>
       <button id="btn-transfer">Transferir</button>
     </div>
   </div>
@@ -71,6 +71,9 @@ export default {
   methods: {
     handleNewDeposit () {
       this.$router.push({ path: '/deposit' })
+    },
+    handleNewPay () {
+      this.$router.push({ path: '/pay' })
     }
   }
 }
@@ -83,7 +86,6 @@ export default {
     background: #333333;
     background-size: cover;
     display: flex;
-    justify-content: center;
     align-items: center;
     display: flex;
     flex-direction: column;
@@ -91,10 +93,14 @@ export default {
 
   .auth-modal {
     width: 430px;
-    padding: 35px;
+    /* padding: 35px; */
 
     display: flex;
     flex-direction: column;
+  }
+
+  .logo {
+    padding-top: 20px;
   }
 
   .btn-actions {
@@ -106,7 +112,7 @@ export default {
     margin: 10px;
   }
 
-  #btn-pay {
+  #new-pay-butt {
     margin: 10px;
   }
 

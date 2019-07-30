@@ -39,12 +39,10 @@ import * as firebase from 'firebase'
 export default {
   data () {
     return {
+      email: '',
+      password: '',
       account: {
         value: 0
-      },
-      user: {
-        email: '',
-        password: ''
       }
     }
   },

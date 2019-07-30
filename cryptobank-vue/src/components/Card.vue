@@ -24,12 +24,12 @@ export default {
 .card {
   max-width: 450px;
   width: 334px;
-  margin: 1.5em auto;
+  margin: 2.5em auto;
   border: 1px solid #dedede;
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   transition: all 0.3s cubic-bezier(.25,.8,.25,1);
   overflow: hidden;
-  border-radius: 4px;
+  border-radius: 5px;
 }
 header {
   background: #ffffff;
