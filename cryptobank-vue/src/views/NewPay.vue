@@ -10,7 +10,7 @@
           <FormControl>
             <div class="input-control">
               <label class="sign">$KA</label>
-              <input v-model="account.valuePay" required type="number">
+              <input v-model.number="account.valuePay" required type="number">
               <span class="info-limit">Digite um valor entre $KA 10,00 e $KA 15.000,00</span>
               </div>
           </FormControl>
@@ -30,18 +30,59 @@ import * as firebase from 'firebase'
 
 export default {
   name: 'new-pay',
-  data () {
-    return {
-      account: {
-        valuePay: 0
-      }
+  data: () => ({
+    account: {
+      valuePay: null
     }
-  },
-
+  }),
   components: {
     CardTransaction,
     FormControl,
     Button
+  },
+  methods: {
+    newPay (...args) {
+      const { valuePay } = this.account
+
+      if (valuePay >= 10 && valuePay <= 15000) {
+        const db = firebase.firestore()
+
+        const userUid = firebase.auth().currentUser.uid
+        const accountRef = db.collection('accounts')
+        const query = accountRef.where('userUid', '==', userUid)
+
+        query.get().then(snapshot => {
+          snapshot.forEach(doc => {
+            const docId = doc.id
+            // Create a reference to the accounts collection
+            const accountRefPay = accountRef.doc(docId)
+
+            db.runTransaction(t => {
+              return t.get(accountRefPay).then(doc => {
+                const limiteValue = doc.data().value
+
+                if (valuePay <= limiteValue) {
+                  const newValueAccount = doc.data().value - valuePay
+                  t.update(accountRefPay, { value: newValueAccount })
+                } else {
+                  alert('Valor em conta insuficiente!')
+                }
+              })
+            })
+              .then(() => {
+                alert('Pagamento efetuado com sucesso!')
+              }).catch(error => {
+                alert('Erro ao efetuar pagamento!', error)
+              })
+          })
+        })
+          .catch(error => {
+            alert('Error getting documents', error)
+          })
+      } else {
+        alert('Digite um valor entre $KA 10,00 e $KA 15.000,00')
+      }
+    }
   }
 }
 </script>
