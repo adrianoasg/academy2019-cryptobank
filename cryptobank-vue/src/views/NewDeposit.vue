@@ -10,12 +10,13 @@
           <FormControl>
             <div class="input-control">
               <label class="sign">$KA</label>
-              <input v-model="account.valueDeposit" required type="number">
+              <input v-model.number="account.valueDesposit" required type="number">
               <span class="info-limit">Digite um valor entre $KA 10,00 e $KA 15.000,00</span>
               </div>
           </FormControl>
           <div class="actions">
             <Button labelButton="Depositar"/>
+            <!-- <button type="submit" class="button" @click="getIdDoc">Teste</button> -->
           </div>
         </form>
       </CardTransaction>
@@ -30,17 +31,50 @@ import * as firebase from 'firebase'
 
 export default {
   name: 'new-deposit',
-  data () {
-    return {
-      account: {
-        valueDeposit: 0
-      }
+  data: () => ({
+    account: {
+      valueDesposit: null
     }
-  },
+  }),
   components: {
     CardTransaction,
     FormControl,
     Button
+  },
+
+  methods: {
+    newDeposit () {
+      const { valueDesposit } = this.account
+
+      const db = firebase.firestore()
+
+      const userUid = firebase.auth().currentUser.uid
+      const accountsRef = db.collection('accounts')
+      const query = accountsRef.where('userUid', '==', userUid)
+
+      query.get().then(snapshot => {
+        snapshot.forEach(doc => {
+          const docId = doc.id
+          // Create a reference to the cities collection
+          const accountRef = db.collection('accounts').doc(docId)
+
+          db.runTransaction(t => {
+            return t.get(accountRef).then(doc => {
+              const newDepositValue = doc.data().value + valueDesposit
+              t.update(accountRef, { value: newDepositValue })
+            })
+          })
+            .then(() => {
+              alert('Deposito efetuado sucesso!')
+            }).catch(error => {
+              alert('Erro ao efetuar deposito! \n\n' + error)
+            })
+        })
+      })
+        .catch(err => {
+          alert('Error getting documents', err)
+        })
+    }
   }
 }
 </script>
@@ -67,6 +101,10 @@ export default {
   .logo {
     padding: 20px;
     padding-bottom: 100px;
+  }
+
+  .form > input:focus {
+  outline: 2px solid #354463;
   }
 
   .form {
