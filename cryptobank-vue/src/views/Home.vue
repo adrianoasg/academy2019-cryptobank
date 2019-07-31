@@ -12,7 +12,7 @@
     <div class="btn-actions">
       <button type="navigate" id="new-deposit-button" class="btn" @click="handleNewDeposit">Depositar</button>
       <button id="new-pay-button" class="btn" @click="handleNewPay">Pagar</button>
-      <button id="btn-transfer">Transferir</button>
+      <button id="btn-transfer" class="btn" @click="handleNewTransfer">Transferir</button>
     </div>
   </div>
 </template>
@@ -72,6 +72,9 @@ export default {
     },
     handleNewPay () {
       this.$router.push({ path: '/pay/new' })
+    },
+    handleNewTransfer () {
+      this.$router.push({ path: '/transfer/new' })
     }
   }
 }

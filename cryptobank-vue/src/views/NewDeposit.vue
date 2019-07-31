@@ -10,7 +10,7 @@
           <FormControl>
             <div class="input-control">
               <label class="sign">$KA</label>
-              <input v-model.number="account.valueDesposit" required type="number">
+              <input v-model.number="valueDesposit" required type="number" class="input">
               <span class="info-limit">Digite um valor entre $KA 10,00 e $KA 15.000,00</span>
               </div>
           </FormControl>
@@ -30,11 +30,11 @@ import * as firebase from 'firebase'
 
 export default {
   name: 'new-deposit',
-  data: () => ({
-    account: {
+  data () {
+    return {
       valueDesposit: null
     }
-  }),
+  },
   components: {
     CardTransaction,
     FormControl,
@@ -42,10 +42,8 @@ export default {
   },
 
   methods: {
-    newDeposit (...args) {
-      const { valueDesposit } = this.account
-
-      if (valueDesposit >= 10 && valueDesposit <= 15000) {
+    newDeposit () {
+      if (this.valueDesposit >= 10 && this.valueDesposit <= 15000) {
         const db = firebase.firestore()
 
         const userUid = firebase.auth().currentUser.uid
@@ -60,7 +58,7 @@ export default {
 
             db.runTransaction(t => {
               return t.get(accountRefDep).then(doc => {
-                const newDepositValue = doc.data().value + valueDesposit
+                const newDepositValue = doc.data().value + this.valueDesposit
                 t.update(accountRefDep, { value: newDepositValue })
               })
             })

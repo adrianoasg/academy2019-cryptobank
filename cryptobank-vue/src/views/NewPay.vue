@@ -1,5 +1,5 @@
 <template>
-  <div class="new-deposit">
+  <div class="new-pay">
     <Header>
       <div class="header">
         <img class="logo" :src="require('../assets/logo.svg')" alt="Logo"/>
@@ -10,7 +10,7 @@
           <FormControl>
             <div class="input-control">
               <label class="sign">$KA</label>
-              <input v-model.number="account.valuePay" required type="number">
+              <input v-model.number="valuePay" required type="number" class="input">
               <span class="info-limit">Digite um valor entre $KA 10,00 e $KA 15.000,00</span>
               </div>
           </FormControl>
@@ -30,21 +30,19 @@ import * as firebase from 'firebase'
 
 export default {
   name: 'new-pay',
-  data: () => ({
-    account: {
+  data () {
+    return {
       valuePay: null
     }
-  }),
+  },
   components: {
     CardTransaction,
     FormControl,
     Button
   },
   methods: {
-    newPay (...args) {
-      const { valuePay } = this.account
-
-      if (valuePay >= 10 && valuePay <= 15000) {
+    newPay () {
+      if (this.valuePay >= 10 && this.valuePay <= 15000) {
         const db = firebase.firestore()
 
         const userUid = firebase.auth().currentUser.uid
@@ -61,8 +59,8 @@ export default {
               return t.get(accountRefPay).then(doc => {
                 const limiteValue = doc.data().value
 
-                if (valuePay <= limiteValue) {
-                  const newValueAccount = doc.data().value - valuePay
+                if (this.valuePay <= limiteValue) {
+                  const newValueAccount = doc.data().value - this.valuePay
                   t.update(accountRefPay, { value: newValueAccount })
                 } else {
                   alert('Valor em conta insuficiente!')
@@ -88,7 +86,7 @@ export default {
 </script>
 
 <style scoped>
-  .new-deposit{
+  .new-pay{
       height: 100%;
       overflow: auto;
       background: #333333;

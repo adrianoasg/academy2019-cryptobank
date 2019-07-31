@@ -32,7 +32,7 @@ const router = new Router({
     },
     {
       path: '/create_account',
-      name: 'createaccount',
+      name: 'create-account',
       component: () => import(/* webpackChunkName: "createaccount" */ './views/CreateAccount.vue')
     },
     {
@@ -55,6 +55,14 @@ const router = new Router({
       path: '/pay/new',
       name: 'new-pay',
       component: () => import(/* webpackChunkName: "new-pay" */ './views/NewPay.vue'),
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/transfer/new',
+      name: 'new-transfer',
+      component: () => import(/* webpackChunkName: "new-transfer" */ './views/NewTransfer.vue'),
       meta: {
         requiresAuth: true
       }
