@@ -2,7 +2,7 @@
   <article class="card">
     <header>
       <span class="info">Saldo disponível</span>
-      <span class="value">$KA {{ account.value }}</span>
+      <span class="balance">$KA {{ account.balance }}</span>
     </header>
   </article>
 </template>
@@ -45,7 +45,7 @@ header {
   font-weight: 300;
 }
 
-.value {
+.balance {
   color: #000000;
   font-size: 40px;
   font-weight: 700;

@@ -47,19 +47,22 @@ export default {
         const db = firebase.firestore()
 
         const userUid = firebase.auth().currentUser.uid
+
+        // Create a reference to the accounts collection
         const accountRef = db.collection('accounts')
         const query = accountRef.where('userUid', '==', userUid)
 
         query.get().then(snapshot => {
           snapshot.forEach(doc => {
             const docId = doc.id
-            // Create a reference to the cities collection
+            // Create a reference to the accounts collection from the document id
             const accountRefDep = accountRef.doc(docId)
 
+            // Add value to account balance transaction
             db.runTransaction(t => {
               return t.get(accountRefDep).then(doc => {
-                const newDepositValue = doc.data().value + this.valueDesposit
-                t.update(accountRefDep, { value: newDepositValue })
+                const newDepositValue = doc.data().balance + this.valueDesposit
+                t.update(accountRefDep, { balance: newDepositValue })
               })
             })
               .then(() => {

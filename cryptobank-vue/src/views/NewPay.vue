@@ -46,24 +46,26 @@ export default {
         const db = firebase.firestore()
 
         const userUid = firebase.auth().currentUser.uid
+        // Create a reference to the accounts collection
         const accountRef = db.collection('accounts')
         const query = accountRef.where('userUid', '==', userUid)
 
         query.get().then(snapshot => {
           snapshot.forEach(doc => {
             const docId = doc.id
-            // Create a reference to the accounts collection
+            // Create a reference to the accounts collection from the document id
             const accountRefPay = accountRef.doc(docId)
 
+            // Remove value to account balance transaction
             db.runTransaction(t => {
               return t.get(accountRefPay).then(doc => {
-                const limiteValue = doc.data().value
+                const limiteBalance = doc.data().balance
 
-                if (this.valuePay <= limiteValue) {
-                  const newValueAccount = doc.data().value - this.valuePay
-                  t.update(accountRefPay, { value: newValueAccount })
+                if (this.valuePay <= limiteBalance) {
+                  const newValueAccount = doc.data().balance - this.valuePay
+                  t.update(accountRefPay, { balance: newValueAccount })
                 } else {
-                  alert('Valor em conta insuficiente!')
+                  alert('Saldo em conta insuficiente para efetuar pagamento!')
                 }
               })
             })

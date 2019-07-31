@@ -43,7 +43,7 @@ export default {
       account: {
         email: '',
         password: '',
-        value: 0
+        balance: 0
       }
     }
   },
@@ -61,14 +61,14 @@ export default {
         })
     },
     createAccountBank (...args) {
-      const { email, value } = this.account
+      const { email, balance } = this.account
 
       // const email = this.email
       const docId = firebase.firestore().collection('posts').doc().id
       const userUid = firebase.auth().currentUser.uid
 
       firebase.firestore()
-        .collection('accounts').doc(docId).set({ id: docId, email, value, userUid })
+        .collection('accounts').doc(docId).set({ id: docId, email, balance, userUid })
         .then(() => {
           alert('Conta criada com sucesso!')
         }).catch(error => {

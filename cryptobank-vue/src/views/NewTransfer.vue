@@ -10,12 +10,13 @@
           <FormControl>
             <div class="input-control">
               <label class="sign">$KA</label>
-              <input v-model.number="valuePay" required type="number" class="input">
+              <input v-model.number="valueTransfer" required type="number" class="input">
               <span class="info-limit">Digite um valor entre $KA 10,00 e $KA 15.000,00</span>
               <div class="info">
                 <span class="info-send">Para quem você deseja enviar?</span>
                 <div class="select">
-                  <select v-model="email" name="select-emails" id="select-emails">
+                  <select id="email" v-model="email" required>
+                    <!-- <option v-for="account in accounts" :key="account.id" :value="account.id">{{ account.email }}</option> -->
                     <option v-for="account in accounts" :key="account.id" :account="account">{{ account.email }}</option>
                   </select>
                 </div>
@@ -43,7 +44,9 @@ export default {
   name: 'new-transfer',
   data () {
     return {
-      accounts: []
+      valueTransfer: null,
+      accounts: [],
+      email: ''
     }
   },
   components: {
@@ -110,6 +113,86 @@ export default {
     // unsubscribe listener
     accountSnapshotListener()
     accountSnapshotListener2()
+  },
+
+  methods: {
+    newTransfer () {
+      const db = firebase.firestore()
+
+      const userUid = firebase.auth().currentUser.uid
+
+      // Create a reference to the accounts collection
+      const accountRef = db.collection('accounts')
+      const queryPay = accountRef.where('userUid', '==', userUid)
+      const queryDep = accountRef.where('email', '==', this.email)
+
+      // Function remove value to account balance transaction
+      const withdrawValueAccount = () => {
+        queryPay.get().then(snapshot => {
+          snapshot.forEach(doc => {
+            const docIdPay = doc.id
+
+            // Create a reference to the accounts collection from the document id
+            const accountRefPay = accountRef.doc(docIdPay)
+
+            // Remove value to account balance transaction
+            db.runTransaction(t => {
+              return t.get(accountRefPay).then(doc => {
+                const limiteBalance = doc.data().balance
+
+                if (this.valueTransfer <= limiteBalance) {
+                  const newValueAccount = doc.data().balance - this.valueTransfer
+                  t.update(accountRefPay, { balance: newValueAccount })
+
+                  // AddValueAccount if withdrawValueAccount is executed
+                  addValueAccount()
+                } else {
+                  alert('Saldo em conta insuficiente para efetuar transferência!')
+                }
+              })
+            })
+              .then(() => {
+                console.log('Retirada efetuada sucesso!')
+              }).catch(error => {
+                console.log('Retirada não efetuada! \n\n' + error)
+              })
+          })
+        })
+          .catch(error => {
+            alert('Erro ao carregar os dados', error)
+          })
+      }
+
+      // Function add value to account balance transaction
+      const addValueAccount = () => {
+        queryDep.get().then(snapshot => {
+          snapshot.forEach(doc => {
+            const docId = doc.id
+            // Create a reference to the cities collection
+            const accountRefDep = accountRef.doc(docId)
+
+            // Add value to account balance transaction
+            db.runTransaction(t => {
+              return t.get(accountRefDep).then(doc => {
+                const newDepositValue = doc.data().balance + this.valueTransfer
+                t.update(accountRefDep, { balance: newDepositValue })
+              })
+            })
+              .then(() => {
+                alert('Transferência efetuada com sucesso!')
+              }).catch(error => {
+                alert('Transferência não efetuada!', error)
+              })
+          })
+        })
+      }
+
+      if (this.valueTransfer >= 10 && this.valueTransfer <= 15000) {
+        withdrawValueAccount()
+      } else {
+        alert('Digite um valor entre $KA 10,00 e $KA 15.000,00')
+      }
+    }
   }
 }
 </script>
