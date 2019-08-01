@@ -14,13 +14,10 @@ export default {
 <style scoped>
 .form-control {
   display: block;
-  margin-top: 2px;
-  margin-bottom: 2px;
+  margin-top: -15px;
 }
 
 .form-control > input:focus {
   outline: 2px solid #354463;
 }
-
-
 </style>

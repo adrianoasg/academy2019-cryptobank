@@ -8,17 +8,17 @@
     <div class="card">
       <Card v-for="account in accounts" :key="account.id" :account="account" />
     </div>
-
     <div class="btn-actions">
-      <button type="navigate" id="new-deposit-button" class="btn" @click="handleNewDeposit">Depositar</button>
-      <button id="new-pay-button" class="btn" @click="handleNewPay">Pagar</button>
-      <button id="btn-transfer" class="btn" @click="handleNewTransfer">Transferir</button>
+      <Button labelButton="Depositar" :image="require('../assets/piggy-bank.svg')" :onClickCallback="handleNewDeposit" />
+      <Button labelButton="Pagar" :image="require('../assets/pay.svg')" :onClickCallback="handleNewPay" />
+      <Button labelButton="Transferir" :image="require('../assets/surface1.svg')" :onClickCallback="handleNewTransfer" />
     </div>
   </div>
 </template>
 
 <script>
-import Card from '@/components/Card'
+import Card from '@/components/home/Card'
+import Button from '@/components/home/Button'
 import firebase from 'firebase'
 
 let accountSnapshotListener = null
@@ -31,7 +31,8 @@ export default {
     }
   },
   components: {
-    Card
+    Card,
+    Button
   },
   mounted () {
     const userUid = firebase.auth().currentUser.uid
@@ -81,7 +82,7 @@ export default {
 </script>
 
 <style scoped>
-.auth-content {
+  .auth-content {
     height: 100%;
     overflow: auto;
     background: #333333;
@@ -104,21 +105,12 @@ export default {
     padding-top: 20px;
   }
 
+  .card {
+    margin-bottom: 100px;
+  }
+
   .btn-actions {
     display: flex;
     flex-direction: column;
   }
-
-  #new-deposit-button {
-    margin: 10px;
-  }
-
-  #new-pay-butt {
-    margin: 10px;
-  }
-
-  #btn-transfer {
-    margin: 10px;
-  }
-
 </style>

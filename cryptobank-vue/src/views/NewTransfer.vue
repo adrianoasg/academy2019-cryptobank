@@ -12,16 +12,15 @@
               <label class="sign">$KA</label>
               <input v-model.number="valueTransfer" required type="number" class="input">
               <span class="info-limit">Digite um valor entre $KA 10,00 e $KA 15.000,00</span>
+              </div>
               <div class="info">
-                <span class="info-send">Para quem você deseja enviar?</span>
+                <p class="info-send">Para <span style="font-weight: bold;">quem</span> você deseja desejada <span style="font-weight: bold;">enviar</span>?</p>
                 <div class="select">
-                  <select id="email" v-model="email" required>
-                    <!-- <option v-for="account in accounts" :key="account.id" :value="account.id">{{ account.email }}</option> -->
+                  <select class="custom-select" id="email" v-model="email" required>
                     <option v-for="account in accounts" :key="account.id" :account="account">{{ account.email }}</option>
                   </select>
                 </div>
               </div>
-            </div>
           </FormControl>
           <div class="actions">
             <Button labelButton="Transferir"/>
@@ -205,18 +204,10 @@ export default {
       background-size: cover;
       display: flex;
       align-items: center;
-      display: flex;
       flex-direction: column;
   }
 
   .header {
-    width: 430px;
-
-    display: flex;
-    flex-direction: column;
-  }
-
-  .logo {
     padding: 20px;
     padding-bottom: 100px;
   }
@@ -238,6 +229,7 @@ export default {
     flex-direction:row;
     justify-content: center;
     align-items: center;
+    margin-bottom: 10px;
   }
 
   input {
@@ -256,6 +248,7 @@ export default {
   }
 
   .info {
+    background-color: #F5F5F5;
     color: #333333;
     display: flex;
     flex-wrap: wrap;
@@ -276,6 +269,10 @@ export default {
     font-size: 20px;
     font-weight: 400;
     margin: .2em 0;
+  }
+
+  .actions {
+    background-color: #F5F5F5;
   }
 
 </style>

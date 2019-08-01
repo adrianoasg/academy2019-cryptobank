@@ -30,14 +30,10 @@ export default {
   border: 0;
   border-radius: 5px;
   color: #FFF;
-  padding: 10px 30px;
-  font-family: 'Roboto', sans-serif;
   font-weight: bold;
   font-size: 20px;
   width: 350px;
   height: 50px;
   cursor: pointer;
-
-  margin: 0 auto;
 }
 </style>

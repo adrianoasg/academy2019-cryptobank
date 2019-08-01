@@ -10,7 +10,7 @@
           <FormControl>
             <div class="input-control">
               <label class="sign">$KA</label>
-              <input v-model.number="valueDesposit" required type="number" class="input">
+              <input v-model.number="valueDesposit" required type="number" class="input" />
               <span class="info-limit">Digite um valor entre $KA 10,00 e $KA 15.000,00</span>
               </div>
           </FormControl>
@@ -67,6 +67,7 @@ export default {
             })
               .then(() => {
                 alert('Deposito efetuado sucesso!')
+                this.valueDesposit = null
               }).catch(error => {
                 alert('Deposito não efetuado! \n\n' + error)
               })
@@ -96,13 +97,6 @@ export default {
   }
 
   .header {
-    width: 430px;
-
-    display: flex;
-    flex-direction: column;
-  }
-
-  .logo {
     padding: 20px;
     padding-bottom: 100px;
   }

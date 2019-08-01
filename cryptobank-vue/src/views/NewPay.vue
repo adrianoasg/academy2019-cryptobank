@@ -71,6 +71,7 @@ export default {
             })
               .then(() => {
                 alert('Pagamento efetuado com sucesso!')
+                this.valuePay = null
               }).catch(error => {
                 alert('Pagamento não efetuado!', error)
               })

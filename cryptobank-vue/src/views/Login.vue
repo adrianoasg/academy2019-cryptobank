@@ -2,30 +2,22 @@
   <div class="auth-content">
     <div class="auth-modal">
       <img class="logo" :src="require('../assets/logo.svg')" alt="Logo"/>
-
       <form class="login-form" @submit.prevent="submitLogin">
         <div class="input-control">
           <label for="email-input">E-mail</label>
           <input v-model="email" type="email" id="email-input" required name="email" class="input" placeholder="Digite seu e-mail">
         </div>
-
         <div class="input-control">
           <label for="password-input">Senha</label>
           <input v-model="password" type="password" id="password-input" required name="password" class="input" placeholder="Digite sua senha">
         </div>
 
-        <div class="actions">
-          <button type="submit" id="login-button" class="auth-modal">
-            Entrar
-          </button>
-        </div>
-
-        <br/>
-
         <div class="btn-actions">
+          <Button labelButton="Entrar" />
+        </div>
+        <div class="actions">
           <a href @click.prevent="handleNewAccount">
-            <span>Novo usuário? </span>
-            <span>Criar Conta</span>
+            <p><span style="font-weight: 300;">Novo usuário? </span><span style="font-weight: bold;">Criar Conta</span></p>
           </a>
         </div>
       </form>
@@ -34,6 +26,7 @@
 </template>
 
 <script>
+import Button from '@/components/login-createAccount/Button'
 import firebase from 'firebase'
 
 export default {
@@ -41,6 +34,10 @@ export default {
     email: '',
     password: ''
   }),
+
+  components: {
+    Button
+  },
 
   methods: {
     submitLogin () {
@@ -103,65 +100,30 @@ export default {
     border-radius: 5px;
     border-width: 0;
     background: #FFF;
-
-    font-family: 'Roboto', sans-serif;
     font-size: 15px;
 
     padding: 0 15px;
-  }
-
-  .btn-actions {
-    display: flex;
-    justify-content: center;
-  }
-
-  .btn-actions > a {
-    cursor: pointer;
-    color: #FFF;
-    text-decoration: none;
-    padding: 15px;
-  }
-
-  span:first-child {
-    font-weight: 300;
-  }
-
-  span:last-child {
-    font-weight: 700;
   }
 
   .input-control > .input:focus {
     background: #F2F2F2;
   }
 
-  .actions {
+  .btn-actions {
     display: flex;
     justify-content: center;
     padding: 15px 0px 0px 0px;
   }
 
-  .login-form > button {
+  .actions {
     display: flex;
     justify-content: center;
   }
 
-  .login-form > .actions > button[type="submit"] {
-    background-color: #FA7268;
-    border: 0;
-    border-radius: 5px;
-    color: #FFF;
-    padding: 15px 30px;
-    font-family: 'Roboto', sans-serif;
-    font-weight: bold;
-    font-size: 15px;
-    width: 100px;
-    height: 45px;
+  .actions > a {
     cursor: pointer;
-  }
-
- .logo {
-   margin: auto;
-   display: block;
+    color: #FFF;
+    text-decoration: none;
   }
 
 </style>
