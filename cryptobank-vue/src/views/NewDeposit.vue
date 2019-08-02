@@ -10,7 +10,7 @@
           <FormControl>
             <div class="input-control">
               <label class="sign">$KA</label>
-              <input v-model.number="valueDesposit" required type="number" class="input" />
+              <input v-model.number="valueDesposit" required type="number" class="input" step="0.01" >
               <span class="info-limit">Digite um valor entre $KA 10,00 e $KA 15.000,00</span>
               </div>
           </FormControl>

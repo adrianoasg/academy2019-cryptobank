@@ -10,14 +10,14 @@
           <FormControl>
             <div class="input-control">
               <label class="sign">$KA</label>
-              <input v-model.number="valueTransfer" required type="number" class="input">
+              <input v-model.number="valueTransfer" required type="number" class="input" step="0.01">
               <span class="info-limit">Digite um valor entre $KA 10,00 e $KA 15.000,00</span>
               </div>
               <div class="info">
-                <p class="info-send">Para <span style="font-weight: bold;">quem</span> você deseja desejada <span style="font-weight: bold;">enviar</span>?</p>
-                <div class="select">
-                  <select class="custom-select" id="email" v-model="email" required>
-                    <option v-for="account in accounts" :key="account.id" :account="account">{{ account.email }}</option>
+                <p class="info-send">Para <span style="font-weight: bold;">quem</span> você deseja <span style="font-weight: bold;">enviar</span>?</p>
+                <div class="styled-select">
+                    <select class="ls-select" name="select-emails" v-model="email" placeholder="Selecione a conta que você deseja transferir" required>
+                    <option v-for="account in orderedEmails" :key="account.id" :account="account">{{ account.email }}</option>
                   </select>
                 </div>
               </div>
@@ -35,6 +35,7 @@ import CardTransaction from '@/components/CardTransaction'
 import FormControl from '@/components/form/FormControl'
 import Button from '@/components/form/Button'
 import * as firebase from 'firebase'
+import _ from 'lodash'
 
 let accountSnapshotListener = null
 let accountSnapshotListener2 = null
@@ -179,6 +180,7 @@ export default {
             })
               .then(() => {
                 alert('Transferência efetuada com sucesso!')
+                this.valueTransfer = null
               }).catch(error => {
                 alert('Transferência não efetuada!', error)
               })
@@ -191,6 +193,12 @@ export default {
       } else {
         alert('Digite um valor entre $KA 10,00 e $KA 15.000,00')
       }
+    }
+  },
+  computed: {
+    // Sort mailing list alphabetically
+    orderedEmails: function () {
+      return _.orderBy(this.accounts, 'email')
     }
   }
 }
@@ -269,6 +277,19 @@ export default {
     font-size: 20px;
     font-weight: 400;
     margin: .2em 0;
+  }
+
+  .styled-select select {
+    width: 300px;
+    padding: 5px;
+    font-size: 16px;
+    line-height: 1;
+    border: 0;
+    border-radius: 5px;
+    height: 40px;
+    background: url('../assets/caret-down-solid.png') no-repeat right #FFFFFF;
+    -webkit-appearance: none;
+    background-position-x: 276px;
   }
 
   .actions {
