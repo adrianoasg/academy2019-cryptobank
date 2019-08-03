@@ -10,7 +10,7 @@
           <FormControl>
             <div class="input-control">
               <label class="sign">$KA</label>
-              <input v-model.number="valueDesposit" required type="number" class="input" step="0.01" >
+              <input v-model.number="valueDesposit" type="number" class="input" step="0.01" placeholder="0,00" required>
               <span class="info-limit">Digite um valor entre $KA 10,00 e $KA 15.000,00</span>
               </div>
           </FormControl>
@@ -26,7 +26,7 @@
 import CardTransaction from '@/components/CardTransaction'
 import FormControl from '@/components/form/FormControl'
 import Button from '@/components/form/Button'
-import * as firebase from 'firebase'
+import firebase from 'firebase'
 
 export default {
   name: 'new-deposit',
@@ -101,10 +101,6 @@ export default {
     padding-bottom: 100px;
   }
 
-  .form > input:focus {
-  outline: 2px solid #354463;
-  }
-
   .form {
     display: flex;
     flex-direction: column;
@@ -125,6 +121,7 @@ export default {
     font-size: 30px;
     width: 153px;
     margin: .2em 0;
+    text-align: center;
     border: 0;
   }
 
@@ -141,5 +138,4 @@ export default {
     font-weight: 400;
     margin: .2em 0;
   }
-
 </style>

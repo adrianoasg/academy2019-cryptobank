@@ -10,13 +10,13 @@
           <FormControl>
             <div class="input-control">
               <label class="sign">$KA</label>
-              <input v-model.number="valueTransfer" required type="number" class="input" step="0.01">
+              <input v-model.number="valueTransfer" type="number" class="input" step="0.01" placeholder="0,00" required >
               <span class="info-limit">Digite um valor entre $KA 10,00 e $KA 15.000,00</span>
               </div>
               <div class="info">
                 <p class="info-send">Para <span style="font-weight: bold;">quem</span> você deseja <span style="font-weight: bold;">enviar</span>?</p>
                 <div class="styled-select">
-                    <select class="ls-select" name="select-emails" v-model="email" placeholder="Selecione a conta que você deseja transferir" required>
+                    <select class="ls-select" name="select-emails" v-model="email" required>
                     <option v-for="account in orderedEmails" :key="account.id" :account="account">{{ account.email }}</option>
                   </select>
                 </div>
@@ -34,7 +34,7 @@
 import CardTransaction from '@/components/CardTransaction'
 import FormControl from '@/components/form/FormControl'
 import Button from '@/components/form/Button'
-import * as firebase from 'firebase'
+import firebase from 'firebase'
 import _ from 'lodash'
 
 let accountSnapshotListener = null
@@ -220,10 +220,6 @@ export default {
     padding-bottom: 100px;
   }
 
-  .form > input:focus {
-  outline: 2px solid #354463;
-  }
-
   .form {
     display: flex;
     flex-direction: column;
@@ -246,6 +242,7 @@ export default {
     width: 153px;
     margin: .2em 0;
     border: 0;
+    text-align: center;
   }
 
   .sign {
@@ -295,5 +292,4 @@ export default {
   .actions {
     background-color: #F5F5F5;
   }
-
 </style>

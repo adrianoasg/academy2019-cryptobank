@@ -2,7 +2,7 @@
   <article class="card">
     <header>
       <span class="info">Saldo disponível</span>
-      <span class="balance">$KA {{ formatPrice(account.balance) }}</span>
+      <span class="balance">$KA {{ formatValue(account.balance) }}</span>
     </header>
   </article>
 </template>
@@ -17,7 +17,7 @@ export default {
     }
   },
   methods: {
-    formatPrice (value) {
+    formatValue (value) {
       let val = (value / 1).toFixed(2).replace('.', ',')
       return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
     }
@@ -41,21 +41,17 @@ header {
   background: #ffffff;
   overflow: hidden;
   padding: .5em 1em;
-
   display: flex;
   flex-direction: column;
 }
-
 .info {
   font-size: 15px;
   font-weight: 300;
 }
-
 .balance {
   color: #000000;
   font-size: 40px;
   font-weight: 700;
   margin: .2em 0;
 }
-
 </style>

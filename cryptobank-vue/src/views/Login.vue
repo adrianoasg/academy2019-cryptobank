@@ -11,14 +11,15 @@
           <label for="password-input">Senha</label>
           <input v-model="password" type="password" id="password-input" required name="password" class="input" placeholder="Digite sua senha">
         </div>
-
         <div class="btn-actions">
-          <Button labelButton="Entrar" />
+          <button type="submit" id="login-button" class="button">
+            Entrar
+          </button>
         </div>
         <div class="actions">
-          <a href @click.prevent="handleNewAccount">
+          <router-link to="/create_account">
             <p><span style="font-weight: 300;">Novo usuário? </span><span style="font-weight: bold;">Criar Conta</span></p>
-          </a>
+          </router-link>
         </div>
       </form>
     </div>
@@ -26,18 +27,14 @@
 </template>
 
 <script>
-import Button from '@/components/login-createAccount/Button'
 import firebase from 'firebase'
 
 export default {
+  name: 'login',
   data: () => ({
     email: '',
     password: ''
   }),
-
-  components: {
-    Button
-  },
 
   methods: {
     submitLogin () {
@@ -48,10 +45,6 @@ export default {
         }).catch(() => {
           alert('Falha na autenticação!')
         })
-    },
-
-    handleNewAccount () {
-      this.$router.push({ path: '/create_account' })
     }
   }
 }
@@ -100,6 +93,8 @@ export default {
     border-radius: 5px;
     border-width: 0;
     background: #FFF;
+
+    font-family: 'Roboto', sans-serif;
     font-size: 15px;
 
     padding: 0 15px;
@@ -112,7 +107,22 @@ export default {
   .btn-actions {
     display: flex;
     justify-content: center;
-    padding: 15px 0px 0px 0px;
+  }
+
+  .login-form > .btn-actions > button[type="submit"] {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #FA7268;
+  font-family: 'Roboto', sans-serif;
+  border: 0;
+  border-radius: 5px;
+  color: #FFF;
+  font-weight: bold;
+  font-size: 15px;
+  width: 100px;
+  height: 45px;
+  cursor: pointer;
   }
 
   .actions {
@@ -124,6 +134,11 @@ export default {
     cursor: pointer;
     color: #FFF;
     text-decoration: none;
+    padding: 15px;
   }
 
+ .logo {
+   margin: auto;
+   display: block;
+  }
 </style>

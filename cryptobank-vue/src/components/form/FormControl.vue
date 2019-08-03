@@ -16,7 +16,6 @@ export default {
   display: block;
   margin-top: -15px;
 }
-
 .form-control > input:focus {
   outline: 2px solid #354463;
 }

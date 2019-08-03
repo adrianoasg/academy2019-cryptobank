@@ -2,8 +2,10 @@
   <article class="card">
     <header>
       <div class="header">
-        <div class="icon-button" tag="button" @click="returnToHome">
-          <img :src="require('../assets/left-arrow.png')" alt="icon"/>
+        <div class="icon-button" tag="button">
+           <router-link to="/home">
+            <img :src="require('../assets/left-arrow.png')" alt="icon"/>
+           </router-link>
         </div>
         <div class="title">
           <label class="label">{{ label }}</label>
@@ -19,15 +21,10 @@
 
 <script>
 export default {
-  name: 'Card',
+  name: 'CardTransaction',
   props: {
     label: {
       required: true
-    }
-  },
-  methods: {
-    returnToHome () {
-      this.$router.push({ path: '/home' })
     }
   }
 }
@@ -52,7 +49,6 @@ header {
   justify-content: center;
   align-items: center;
 }
-
 .header {
   width: 100%;
   height: 32px;
@@ -60,17 +56,14 @@ header {
   flex-direction: row;
   align-items: flex-start;
   background: #4076AD;
-
   align-items: center;
 }
-
 .icon-button {
   display: flex;
   justify-content: flex-start;
   align-items: center;
   cursor: pointer;
 }
-
 .title {
   display: flex;
   flex: 1;
@@ -79,11 +72,9 @@ header {
   font-size: 13px;
   font-weight: 700;
 }
-
 .info {
   font-size: 20px;
   font-weight: 300;
   padding: 10px 0px;
 }
-
 </style>

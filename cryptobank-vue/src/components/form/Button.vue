@@ -16,16 +16,13 @@ export default {
   }
 }
 </script>
-
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .actions {
   padding: 15px 15px;
-
 }
 .button {
   display: block;
-
   background-color: #FA7268;
   border: 0;
   border-radius: 5px;

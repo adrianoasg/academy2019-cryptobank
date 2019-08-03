@@ -1,7 +1,7 @@
 <template>
   <div class="auth-content">
     <Header>
-      <div class="auth-modal">
+      <div class="icon-button" @click="signOut">
         <img class="logo" :src="require('../assets/logo.svg')" alt="Logo"/>
       </div>
     </Header>
@@ -9,16 +9,42 @@
       <Card v-for="account in accounts" :key="account.id" :account="account" />
     </div>
     <div class="btn-actions">
-      <Button labelButton="Depositar" :image="require('../assets/piggy-bank.svg')" :onClickCallback="handleNewDeposit" />
-      <Button labelButton="Pagar" :image="require('../assets/pay.svg')" :onClickCallback="handleNewPay" />
-      <Button labelButton="Transferir" :image="require('../assets/surface1.svg')" :onClickCallback="handleNewTransfer" />
+      <router-link to="/deposit/new">
+        <div class="content">
+          <div class="button">
+            <img :src="require('../assets/piggy-bank.svg')" alt="Icon">
+          </div>
+          <div class="text-button">
+            <span>Depositar</span>
+          </div>
+        </div>
+      </router-link>
+      <router-link to="/pay/new">
+        <div class="content">
+          <div class="button">
+            <img :src="require('../assets/pay.svg')" alt="Icon">
+          </div>
+          <div class="text-button">
+            <span>Pagar</span>
+          </div>
+        </div>
+      </router-link>
+      <router-link to="/transfer/new">
+        <div class="content">
+          <div class="button">
+            <img :src="require('../assets/surface1.svg')" alt="Icon">
+          </div>
+          <div class="text-button">
+            <span>Transferir</span>
+          </div>
+        </div>
+      </router-link>
     </div>
   </div>
 </template>
 
 <script>
 import Card from '@/components/home/Card'
-import Button from '@/components/home/Button'
 import firebase from 'firebase'
 
 let accountSnapshotListener = null
@@ -31,8 +57,7 @@ export default {
     }
   },
   components: {
-    Card,
-    Button
+    Card
   },
   mounted () {
     const userUid = firebase.auth().currentUser.uid
@@ -67,15 +92,15 @@ export default {
     // unsubscribe listener
     accountSnapshotListener()
   },
+
   methods: {
-    handleNewDeposit () {
-      this.$router.push({ path: '/deposit/new' })
-    },
-    handleNewPay () {
-      this.$router.push({ path: '/pay/new' })
-    },
-    handleNewTransfer () {
-      this.$router.push({ path: '/transfer/new' })
+    signOut () {
+      firebase.auth().signOut().then(() => {
+        alert('Desconectado com sucesso!')
+        this.$router.push('/login')
+      }).catch(error => {
+        alert('Erro ao desconectar. \n\n' + error)
+      })
     }
   }
 }
@@ -83,22 +108,22 @@ export default {
 
 <style scoped>
   .auth-content {
-    height: 100%;
     overflow: auto;
     background: #333333;
-    background-size: cover;
     display: flex;
     align-items: center;
     display: flex;
     flex-direction: column;
+    background-size: cover;
+    width: 100%;
+    height: 100%;
   }
 
-  .auth-modal {
+  .icon-button {
     width: 430px;
-    /* padding: 35px; */
-
     display: flex;
     flex-direction: column;
+    cursor: pointer;
   }
 
   .logo {
@@ -106,11 +131,47 @@ export default {
   }
 
   .card {
-    margin-bottom: 100px;
+    margin-bottom: 80px;
   }
 
   .btn-actions {
     display: flex;
     flex-direction: column;
   }
+
+  .btn-actions > a {
+    cursor: pointer;
+    color: #FFF;
+    text-decoration: none;
+  }
+
+ /* Buttton */
+  .content {
+  width: 334px;
+  height: 50px;
+  background-color: #FA7268;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.button {
+  display: flex;
+  justify-content: center;
+  margin-left: 10px;
+}
+
+.text-button {
+  font-size: 20px;
+  color: #FFF;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  text-align: right;
+  margin-right: 10px;
+}
+
 </style>
