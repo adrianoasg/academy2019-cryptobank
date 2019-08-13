@@ -1,5 +1,8 @@
 # cryptobank-vue
 
+Projeto final Kazap Academy, desenvolvido com VueJs e Firebase, simula um banco 
+virtual de criptomoeda, o cliente pode criar uma conta e efetuar depositos, pagamentos e tranferências para outros clientes.
+
 ## Project setup
 ```
 yarn install
